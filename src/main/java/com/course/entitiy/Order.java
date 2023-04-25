@@ -26,6 +26,8 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
     private Integer orderStatus;
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "id.order")
@@ -78,6 +80,14 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItens() {
         return itens;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override
