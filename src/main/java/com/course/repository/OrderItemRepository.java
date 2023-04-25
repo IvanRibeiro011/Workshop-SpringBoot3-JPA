@@ -1,8 +1,9 @@
 package com.course.repository;
 
 import com.course.entitiy.OrderItem;
-import com.course.pk.OrderItemPk;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface OrderItemRepository extends JpaRepository<OrderItem, OrderItemPk> {
+@Repository
+public interface OrderItemRepository extends JpaRepository<OrderItem,Long> {
 }
