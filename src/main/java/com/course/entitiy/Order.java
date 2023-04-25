@@ -2,11 +2,16 @@ package com.course.entitiy;
 
 import com.course.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -21,6 +26,11 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
     private Integer orderStatus;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "id.order")
+    @Fetch(FetchMode.JOIN)
+    private Set<OrderItem> itens = new HashSet<>();
 
     public Order() {
     }
@@ -64,6 +74,10 @@ public class Order implements Serializable {
         if (orderStatus != null) {
             this.orderStatus = orderStatus.getCode();
         }
+    }
+
+    public Set<OrderItem> getItens() {
+        return itens;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.course.entitiy;
 
 import com.course.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -12,7 +15,8 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    private OrderItemPk id;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private OrderItemPk id = new OrderItemPk();
     private Integer quantity;
     private Double price;
 
@@ -25,7 +29,7 @@ public class OrderItem implements Serializable {
         this.id.setOrder(order);
         this.id.setProduct(product);
     }
-
+    @JsonBackReference
     public Order getOrder(){
         return id.getOrder();
     }
