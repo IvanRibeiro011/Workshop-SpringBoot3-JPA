@@ -27,4 +27,9 @@ public class UserController {
     public ResponseEntity<User> insert(@RequestBody User user){
         return new ResponseEntity<>(service.insert(user),HttpStatus.CREATED);
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
